@@ -1,0 +1,14 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+h1 {
+    background-color: aquamarine;
+    border: 10%;
+    display: inline;
+}
+p {
+    background-color: slateblue;
+    border-style: ridge;
+    display: inline;
+}
