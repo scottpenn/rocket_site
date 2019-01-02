@@ -1,0 +1,7 @@
+[package]
+name = "rocket_site"
+version = "0.1.0"
+authors = ["scottp"]
+edition = "2018"
+
+[dependencies]
