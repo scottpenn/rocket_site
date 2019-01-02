@@ -1,1 +1,1 @@
-"web: ROCKET_PORT=$PORT ROCKET_ENV=prod ./target/release/rocket_site" 
+web: ROCKET_PORT=$PORT ROCKET_ENV=prod ./target/release/rocket_site
