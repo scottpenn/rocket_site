@@ -3,12 +3,37 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
 
-    <h1>My First Heading</h1>
-    <p>My first paragraph.</p>
+    <div class="tic-tac-toe-grid">
+        <div class="grid-content">
+                <div class="square" id="top-left"> </div>
+                <div class="square" id="top-middle"> </div>
+                <div class="square" id="top-right"> </div>
+                <div class="square" id="middle-left"> </div>
+                <div class="square" id="center"> </div>
+                <div class="square" id="middle-right"> </div>
+                <div class="square" id="bottom-left"> </div>
+                <div class="square" id="bottom-middle"> </div>
+                <div class="square" id="bottom-right"> </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var next = "X"
+
+        $('.square').click(function(){
+            if (this.clicked == undefined) {
+                $(this).text(next);
+                next = (next == "X") ? "O" : "X";
+            }
+            this.clicked = true;
+        });
+    </script>
 
 </body>
 
