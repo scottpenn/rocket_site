@@ -4,6 +4,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/scripts/cat.js"></script>
 </head>
 
 <body>
@@ -50,24 +51,15 @@
             bm = $('#bottom-middle').text();
             br = $('#bottom-right').text();
 
-            if ([tl, tm, tr].filter(square => square == "X").length >= 1 && [tl, tm, tr].filter(square => square == "O").length >= 1
-             && [ml, c, mr].filter(square => square == "X").length >= 1 && [ml, c, mr].filter(square => square == "O").length >= 1
-             && [bl, bm, br].filter(square => square == "X").length >= 1 && [bl, bm, br].filter(square => square == "O").length >= 1
-             && [tl, ml, bl].filter(square => square == "X").length >= 1 && [tl, ml, bl].filter(square => square == "O").length >= 1
-             && [tm, c, bm].filter(square => square == "X").length >= 1 && [tm, c, bm].filter(square => square == "O").length >= 1
-             && [tr, mr, br].filter(square => square == "X").length >= 1 && [tr, mr, br].filter(square => square == "O").length >= 1
-             && [tl, c, br].filter(square => square == "X").length >= 1 && [tl, c, br].filter(square => square == "O").length >= 1
-             && [tr, c, bl].filter(square => square == "X").length >= 1 && [tr, c, bl].filter(square => square == "O").length >= 1) {
-                    victor = "cat";
-                    $('#victor-text').text("Cat's game!");
-                }
-
-            if ((tl == tm && tl == tr && tl != " ") || (ml == c && ml == mr && ml != " ") || (bl == bm && bl == br && bl != " ") ||
-                (tl == ml && tl == bl && tl != " ") || (tm == c && tm == bm && tm != " ") || (tr == mr && tr == br && tr != " ") ||
-                (tl == c && tl == br && tl != " ")  || (tr == c && tr == bl && tr != " ")) {
-                    victor = next;
-                    $('#victor-text').text(victor + " wins!");
-                }
+            if (cat_grids.includes(tl + tm + tr + ml + c + mr + bl + bm + br)) {
+                victor = "Cat";
+                $('#victor-text').text("Cat's game!");
+            } else if ((tl == tm && tl == tr && tl != " ") || (ml == c && ml == mr && ml != " ") || (bl == bm && bl == br && bl != " ") ||
+                       (tl == ml && tl == bl && tl != " ") || (tm == c && tm == bm && tm != " ") || (tr == mr && tr == br && tr != " ") ||
+                       (tl == c && tl == br && tl != " ")  || (tr == c && tr == bl && tr != " ")) {
+                victor = next;
+                $('#victor-text').text(victor + " wins!");
+            }
 
 
         }
