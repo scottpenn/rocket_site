@@ -161,7 +161,7 @@ impl fmt::Display for TicTacToe {
 enum Move {
     X,
     O,
-    Empty,
+    Empty
 }
 
 impl Move {
@@ -191,19 +191,4 @@ enum Winner {
     X,
     Cat,
     TBD,
-}
-
-fn main() {
-    let mut start_board = TicTacToe::new();
-    let mut board_map = HashMap::new();
-    start_board.moves = start_board.generate_next(&mut board_map);
-    start_board.winner = start_board.determine_winner();
-    let mut winner_map = HashMap::new();
-    start_board.generate_winner_map(&mut winner_map);
-    println!("{}{:?}\n", start_board, start_board.winner);
-    for (grid, winners) in winner_map.iter() {
-        if winners.contains(&Winner::Cat) {
-            println!("{:?}", grid);
-        }
-    }
 }

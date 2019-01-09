@@ -24,29 +24,184 @@
                 <div class="square" id="bottom-right"> </div>
             </div>
         </div>
-    </div>
-    <p id="victor-text"></p>
+        </div>
+        <p id="victor-text"></p>
 
-    <pre>
-        <code class="language-rust line-numbers"><!--
-            fn generate_next(&self) -> Vec<TicTacToe> {
-                let mut boards = Vec::new();
-                for x in 0..3 {
-                    for y in 0..3 {
-                        if self.board[x][y] == Move::None {
-                            let mut next_board = TicTacToe::new();
-                            next_board.board = self.make_move(x, y);
-                            next_board.next = Move::next(&self.next);
-                            next_board.moves = next_board.generate_next();
-                            boards.push(next_board);
+        <p>
+            To brush up on my HTML/CSS, I made the above tic tac toe grid.
+            It looks nice for all screen widths, I'm very proud of it, try it out!
+            It's also a fully functional game of tic tac toe.
+            There are only 9 win conditions, so the code should be simple, right?
+            Just a little Javascript/JQuery and you're done.
+        </p>
+
+        <pre>
+            <code class="language-javascript line-numbers"><!--
+                var next = "X";
+                var victor;
+
+                $('.square').click(function () {
+                    if (victor != undefined) { return; }
+                    if (this.clicked == undefined) {
+                        $(this).text(next);
+                        check();
+                        next = (next == "X") ? "O" : "X";
+                    }
+                    this.clicked = true;
+                });
+
+                function check() {
+                    tl = $('#top-left').text();
+                    tm = $('#top-middle').text();
+                    tr = $('#top-right').text();
+                    ml = $('#middle-left').text();
+                    c  = $('#center').text();
+                    mr = $('#middle-right').text();
+                    bl = $('#bottom-left').text();
+                    bm = $('#bottom-middle').text();
+                    br = $('#bottom-right').text();
+
+                    if ((tl == tm && tl == tr && tl != " ") ||
+                        (ml == c && ml == mr && ml != " ")  || 
+                        (bl == bm && bl == br && bl != " ") ||
+                        (tl == ml && tl == bl && tl != " ") ||
+                        (tm == c && tm == bm && tm != " ")  ||
+                        (tr == mr && tr == br && tr != " ") ||
+                        (tl == c && tl == br && tl != " ")  || 
+                        (tr == c && tr == bl && tr != " ")) {
+                        victor = next;
+                        $('#victor-text').text(victor + " wins!");
+                    }
+                }
+            --></code>
+        </pre>
+
+        <p>
+            This works for win conditions, but what about a "cat's game," where no player wins?
+            There are two routes to go here. First, I could check if the board is full. If no win conditions evaluate
+            to true, I could safely declare the board a tie.
+
+            <pre>
+                    <code class="language-javascript line-numbers"><!--
+                        if (victor == undefined && [tl, tm, tr, ml, c, mr, bl, bm, br].every(hasXorY)) {
+                            victor = "Cat";
+                            $('#victor-text').text("Cat's game!");
+                        }
+                    --></code>
+                </pre>
+
+            But sometimes a cat's game is inevitable. Why bother continuing if the board looks like this?
+        </p>
+
+        <div class="tic-tac-toe-grid">
+            <div class="grid-content">
+                <div class="square2">X</div>
+                <div class="square2">O</div>
+                <div class="square2">X</div>
+                <div class="square2"> </div>
+                <div class="square2"> </div>
+                <div class="square2"> </div>
+                <div class="square2">O</div>
+                <div class="square2">X</div>
+                <div class="square2">O</div>
+            </div>
+        </div>
+
+        <p>
+            The second route, and the one I chose, is to generate all possible boards and determine the winner for each
+            possibility.
+            You can model each board as a node, with possible successor boards as children. Thankfully a tic tac toe
+            grid has only 9 squares,
+            so the branching factor maxes out at 9 and even reduces by 1 as we step down the tree.
+            Suddenly I'm glad that I didn't try and model chess.
+            <br><br>
+            My default language these days for small problems is
+            Rust,
+            so one "cargo new" later I'm diving head first into the inner workings of tic tac toe.
+        </p>
+
+        <pre>
+            <code class="language-rust line-numbers"><!--
+                fn main() {
+                    println!("Hello, world!");
+                }
+        --></code>
+        </pre>
+
+        <p>
+            Let's begin by building the main struct to represent a valid Tic Tac Toe board.
+            We need 4 things.<br><br>
+            1. A 2D Array of the squares.<br>
+            2. The next move to be played (X or O).<br>
+            3. All of the possible successor boards after one move.<br>
+            4. The winner, if any.
+        </p>
+
+        <pre>
+            <code class="language-rust line-numbers"><!--
+                pub struct TicTacToe {
+                    board: Vec<Vec<Move>>,
+                    next: Move,
+                    moves: Vec<TicTacToe>,
+                    winner: Vec<Winner>,
+                }
+        --></code>
+        </pre>
+
+        <p>
+            Note that I make the winner field a Vector, as a complete board may have more than one winner.
+            Any such board is invalid, but I'm not checking for validity, just cat's games.
+        </p>
+
+        <div class="tic-tac-toe-grid">
+            <div class="grid-content">
+                <div class="square2">X</div>
+                <div class="square2"> </div>
+                <div class="square2">O</div>
+                <div class="square2">X</div>
+                <div class="square2"> </div>
+                <div class="square2">O</div>
+                <div class="square2">X</div>
+                <div class="square2"> </div>
+                <div class="square2">O</div>
+            </div>
+        </div>
+
+        <p>
+            Move is an enum representing the possible states of a square. Winner is an enum representing the possible
+            winners. TBD is used to denote a grid where it is too early to determine a winner.
+        </p>
+
+        <pre>
+            <code class="language-rust line-numbers"><!--
+                #[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
+                enum Move {
+                    X,
+                    O,
+                    Empty
+                }
+
+                impl Move {
+                    fn next(mv: &Move) -> Move {
+                        match mv {
+                            Move::X => Move::O,
+                            Move::O => Move::X,
+                            Move::Empty => Move::Empty,
                         }
                     }
                 }
-                boards
-            }
+
+                #[derive(Debug, PartialEq, Clone, Copy)]
+                enum Winner {
+                    O,
+                    X,
+                    Cat,
+                    TBD,
+                }
         --></code>
-    </pre>
-</section>
+        </pre>
+
+    </section>
 
     <script>
         var next = "X";

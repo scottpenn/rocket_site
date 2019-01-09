@@ -15,7 +15,7 @@ body {
     background: #fcf6f0;
 }
 
-p {
+#victor-text {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,7 +46,7 @@ p {
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
 }
 
-.square {
+.square, .square2 {
     background: powderblue;
     border: 2px solid black;
 
