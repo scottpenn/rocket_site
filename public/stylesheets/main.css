@@ -2,6 +2,26 @@
     box-sizing: border-box;
 }
 
+body {
+    background: #fcf6f0;
+}
+
+.content {
+
+    display: block;
+    width: 60%;
+    margin: auto;
+
+    background: #fcf6f0;
+}
+
+p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3vw;
+}
+
 .tic-tac-toe-grid {
     background: black;
     width: 40%;
@@ -34,7 +54,7 @@
     justify-content: center;
     align-items: center;
 
-    font-size: 5em
+    font-size: 5vw
 }
 
 #top-left, #top-middle, #top-right {

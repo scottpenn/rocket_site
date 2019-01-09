@@ -3,14 +3,16 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/prism.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/scripts/prism.js"></script>
     <script src="/scripts/cat.js"></script>
 </head>
 
 <body>
-
-    <div class="tic-tac-toe-grid">
-        <div class="grid-content">
+    <section class="content">
+        <div class="tic-tac-toe-grid">
+            <div class="grid-content">
                 <div class="square" id="top-left"> </div>
                 <div class="square" id="top-middle"> </div>
                 <div class="square" id="top-right"> </div>
@@ -23,15 +25,35 @@
             </div>
         </div>
     </div>
-
     <p id="victor-text"></p>
+
+    <pre>
+        <code class="language-rust line-numbers"><!--
+            fn generate_next(&self) -> Vec<TicTacToe> {
+                let mut boards = Vec::new();
+                for x in 0..3 {
+                    for y in 0..3 {
+                        if self.board[x][y] == Move::None {
+                            let mut next_board = TicTacToe::new();
+                            next_board.board = self.make_move(x, y);
+                            next_board.next = Move::next(&self.next);
+                            next_board.moves = next_board.generate_next();
+                            boards.push(next_board);
+                        }
+                    }
+                }
+                boards
+            }
+        --></code>
+    </pre>
+</section>
 
     <script>
         var next = "X";
         var victor;
 
-        $('.square').click(function(){
-            if (victor != undefined) {return;}
+        $('.square').click(function () {
+            if (victor != undefined) { return; }
             if (this.clicked == undefined) {
                 $(this).text(next);
                 check();
@@ -55,8 +77,8 @@
                 victor = "Cat";
                 $('#victor-text').text("Cat's game!");
             } else if ((tl == tm && tl == tr && tl != " ") || (ml == c && ml == mr && ml != " ") || (bl == bm && bl == br && bl != " ") ||
-                       (tl == ml && tl == bl && tl != " ") || (tm == c && tm == bm && tm != " ") || (tr == mr && tr == br && tr != " ") ||
-                       (tl == c && tl == br && tl != " ")  || (tr == c && tr == bl && tr != " ")) {
+                (tl == ml && tl == bl && tl != " ") || (tm == c && tm == bm && tm != " ") || (tr == mr && tr == br && tr != " ") ||
+                (tl == c && tl == br && tl != " ") || (tr == c && tr == bl && tr != " ")) {
                 victor = next;
                 $('#victor-text').text(victor + " wins!");
             }
