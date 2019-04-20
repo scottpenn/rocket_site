@@ -15,6 +15,11 @@ fn index() -> Result<NamedFile, NotFound<String>> {
     NamedFile::open("public/pages/index.html").map_err(|n| NotFound(format!("Bad path: {:?}", n)))
 }
 
+#[get("/euler")]
+fn euler() -> Result<NamedFile, NotFound<String>> {
+    NamedFile::open("public/pages/euler.html").map_err(|n| NotFound(format!("Bad path: {:?}", n)))
+}
+
 #[get("/about")]
 fn about() -> Result<NamedFile, NotFound<String>> {
     NamedFile::open("public/pages/about.html").map_err(|n| NotFound(format!("Bad path: {:?}", n)))
@@ -39,5 +44,5 @@ fn files(file: PathBuf) -> Result<NamedFile, NotFound<String>> {
 }
 
 fn main() {
-    rocket::ignite().mount("/", routes![index, about, about_replace, files]).mount("/", StaticFiles::from("public")).launch();
+    rocket::ignite().mount("/", routes![index, euler, about, about_replace, files]).mount("/", StaticFiles::from("public")).launch();
 }

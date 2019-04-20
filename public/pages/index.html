@@ -7,9 +7,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/scripts/prism.js"></script>
     <script src="/scripts/cat.js"></script>
+    <script src="/scripts/scroll.js"></script>
 </head>
 
 <body>
+    <div class="nav">
+        <a id="homepage" href="/">Scott Bot</a>
+        <a href="https://www.google.com">About Me</a>
+        <a href="/euler">Project Euler</a>
+        <p id="scroll-text" hidden="true">You have scrolled <span id="scroll-distance"></span> feet</p>
+    </div>
     <section class="content">
         <div class="tic-tac-toe-grid">
             <div class="grid-content">
@@ -200,6 +207,7 @@
                 }
         --></code>
         </pre>
+        
 
     </section>
 

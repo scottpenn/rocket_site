@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/prism.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/scripts/prism.js"></script>
+    <script src="/scripts/cat.js"></script>
+</head>
+
+<body>
+    <div class="nav">
+        <a class="main" href="/">Scott Bot</a>
+        <a class="secondary" href="https://www.google.co.uk">About</a>
+        <a class="secondary" href="/euler">Project Euler</a>
+    </div>
+    <section class="content">
+
+        <p>
+            The bird is the word
+        </p>
+
+        <pre>
+            <code class="language-rust line-numbers"><!--
+                pub fn euler_1(limit: u32) -> u32 {
+                    let mut sum = 0;
+                    for i in 1..limit {
+                        if i % 5 == 0 || i % 3 == 0 {
+                            sum += i;
+                        }
+                    }
+                    sum
+                }
+            --></code>
+        </pre>
+
+        <pre>
+            <code class="language-rust line-numbers"><!--
+                pub fn euler_1_iter(limit: u32) -> u32 {
+                    (1..limit).filter(|i| i % 5 == 0 || i % 3 == 0).sum()
+                }
+            --></code>
+        </pre>
+
+        <pre>
+            <code class="language-rust line-numbers"><!--
+                pub fn euler_1_par_iter(limit: u32) -> u32 {
+                    (1..limit).into_par_iter().filter(|i| i % 5 == 0 || i % 3 == 0).sum()
+                }  
+            --></code>
+        </pre>
+
+        <pre>
+            <code class="language-rust line-numbers"><!--
+                pub fn euler_1_loop(limit: u32) -> u32 {
+                    let mut sum = 0;
+                    let mut threes = 3;
+                    let mut fives = 5;
+
+                    while threes < limit {
+                        sum += threes;
+                        threes += 3;
+                    }
+
+                    while fives < limit {
+                        sum += fives;
+                        fives += 5;
+                        if fives >= limit { break }
+                        sum += fives;
+                        fives += 10;
+                    }
+
+                    sum
+                }
+            --></code>
+        </pre>
+
+
+    </section>
+
+</body>
+
+</html>
