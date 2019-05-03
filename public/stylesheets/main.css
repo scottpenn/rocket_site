@@ -34,6 +34,15 @@ body {
     display: block;
 }
 
+section a {
+    color: #383232;
+    text-decoration: none;
+}
+
+section a:hover {
+    color: #5c5c5c;
+}
+
 .main {
     font-size: 25px;
 }

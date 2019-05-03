@@ -12,14 +12,37 @@
 <body>
     <div class="nav">
         <a class="main" href="/">Scott Bot</a>
-        <a class="secondary" href="https://www.google.co.uk">About</a>
+        <a class="secondary" href="/about">About</a>
         <a class="secondary" href="/euler">Project Euler</a>
     </div>
     <section class="content">
 
+        <h1>Project Euler</h1>
+
         <p>
-            The bird is the word
+            The best way I've found to learn new programming concepts is to build a small project. 
+            Sometimes I'll make a puzzle solver or a command line tool, but by far my favorite 
+            project to work on is <a href="https://projecteuler.net/" target="_blank">Project Euler</a>. It's a collection of math problems designed to be solved with the aid of a computer.
+            The problems are usually simple, but because they can be solved in many ways, they're useful for learning how to use new libraries.
         </p>
+
+        <p>
+            This page serves to document my progress in solving Project Euler problems. My initial goals in taking on this project were testing, benchmarking,
+            iterators, paralellism, and optimization. My language of choice is Rust, which I believe to be one of the best programming languages for small
+            projects. With one "cargo new" I can start coding with no further setup. Rust also has many mature libraries which can be incorporated into
+            any project with ease. Additionally, Rust has a reputation for being fast and safe, which I will put to the test as I solve each problem.
+        </p>
+
+        <h3>
+            <a href="https://projecteuler.net/problem=1" target="_blank">Problem 1: Multiples of 3 and 5</a>
+        </h3>
+
+        <h4>
+            If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+
+            Find the sum of all the multiples of 3 or 5 below 1000.
+        </h4>
+
         <hr>
         <pre><code>pub fn euler_1(limit: u32) -> u32 {
     let mut sum = 0;
