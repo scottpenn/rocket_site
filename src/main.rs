@@ -25,15 +25,9 @@ fn about() -> Result<NamedFile, NotFound<String>> {
     NamedFile::open("public/pages/about.html").map_err(|n| NotFound(format!("Bad path: {:?}", n)))
 }
 
-#[get("/about?<first_name>&<last_name>")]
-fn about_replace(first_name: String, last_name: String) -> Result<Html<String>, Error> {
-
-    let mut html = String::new();
-    NamedFile::open("public/pages/about.html")?.file_mut().read_to_string(&mut html)?;
-    html = html.replace("Scott", &format!("<b>{}</b>", &first_name));
-    html = html.replace("Penn", &format!("<b>{}</b>", &last_name));
-
-    Ok(Html(html))
+#[get("/twitter")]
+fn twitter() -> Result<NamedFile, NotFound<String>> {
+    NamedFile::open("public/pages/twitter.html").map_err(|n| NotFound(format!("Bad path: {:?}", n)))
 }
 
 //Static file server
@@ -44,5 +38,5 @@ fn files(file: PathBuf) -> Result<NamedFile, NotFound<String>> {
 }
 
 fn main() {
-    rocket::ignite().mount("/", routes![index, euler, about, about_replace, files]).mount("/", StaticFiles::from("public")).launch();
+    rocket::ignite().mount("/", routes![index, euler, about, twitter, files]).mount("/", StaticFiles::from("public")).launch();
 }
