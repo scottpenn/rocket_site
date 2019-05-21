@@ -21,17 +21,23 @@
         <h1>Project Euler</h1>
 
         <p>
-            The best way I've found to learn new programming concepts is to build a small project. 
-            Sometimes I'll make a puzzle solver or a command line tool, but by far my favorite 
-            project to work on is <a href="https://projecteuler.net/" target="_blank">Project Euler</a>. It's a collection of math problems designed to be solved with the aid of a computer.
-            The problems are usually simple, but because they can be solved in many ways, they're useful for learning how to use new libraries.
+            The best way I've found to learn new programming concepts is to build a small project.
+            Sometimes I'll make a puzzle solver or a command line tool, but by far my favorite
+            project to work on is <a href="https://projecteuler.net/" target="_blank">Project Euler</a>. It's a
+            collection of math problems designed to be solved with the aid of a computer.
+            The problems are usually simple, but because they can be solved in many ways, they're useful for learning
+            how to use new libraries.
         </p>
 
         <p>
-            This page serves to document my progress in solving Project Euler problems. My initial goals in taking on this project were testing, benchmarking,
-            iterators, paralellism, and optimization. My language of choice is Rust, which I believe to be one of the best programming languages for small
-            projects. With one "cargo new" I can start coding with no further setup. Rust also has many mature libraries which can be incorporated into
-            any project with ease. Additionally, Rust has a reputation for being fast and safe, which I will put to the test as I solve each problem.
+            This page serves to document my progress in solving Project Euler problems. My initial goals in taking on
+            this project were testing, benchmarking,
+            iterators, paralellism, and optimization. My language of choice is Rust, which I believe to be one of the
+            best programming languages for small
+            projects. With one "cargo new" I can start coding with no further setup. Rust also has many mature libraries
+            which can be incorporated into
+            any project with ease. Additionally, Rust has a reputation for being fast and safe, which I will put to the
+            test as I solve each problem.
         </p>
 
         <h3>
@@ -39,10 +45,18 @@
         </h3>
 
         <h4>
-            If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+            If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of
+            these multiples is 23.
 
             Find the sum of all the multiples of 3 or 5 below 1000.
         </h4>
+        <p>
+            The first problem is simple, and most likely meant as an introduction to the style of future Project Euler
+            problems.
+            Because the limit of 1000 is so low, there are few concerns related to performance,
+            but I explored a few different solutions to get used to benchmarking and testing in Rust.
+            The first solution is a simple for loop, testing each number for the conditions.
+        </p>
 
         <hr>
         <pre><code>pub fn euler_1(limit: u32) -> u32 {
@@ -56,17 +70,38 @@
 }</code></pre>
         <hr>
 
+        <p>
+            Using cargo bench and Criterion, the benchmark output: <br><br>
+            Euler 1/For Loop time: [2.0562 us 2.1070 us 2.1765 us] <br><br>
+            To give a point of comparison, I wrote the next solution using a simple iterator. Rust contains many "zero-cost abstractions," 
+            so I predict that the iterator approach should provide the same performance.
+        </p>
+
         <hr>
         <pre><code>pub fn euler_1_iter(limit: u32) -> u32 {
     (1..limit).filter(|i| i % 5 == 0 || i % 3 == 0).sum()
 }</code></pre>
         <hr>
 
+        <p>
+            As expected, the benchmark output agrees, showing virtually no change in performance: <br><br>
+            Euler 1/Iterator time: [2.0246 us 2.1309 us 2.2494 us] <br><br>
+            Not bad for a one-liner, but can it be improved? Sticking to the iterator approach, I next reached for another popular Rust library, Rayon.
+            Rayon provides easy to use methods for parallel computation. With one insertion of the into_par_iter method, this function is now parallel.
+        </p>
+
         <hr>
         <pre><code>pub fn euler_1_par_iter(limit: u32) -> u32 {
     (1..limit).into_par_iter().filter(|i| i % 5 == 0 || i % 3 == 0).sum()
 }</code></pre>
         <hr>
+
+        <p>
+            Euler 1/Parallel Iterator time: [39.087 us 44.793 us 52.946 us] <br><br>
+
+            What happened? Well, given the limit of only 1000, the jump to parallel processing is not only not needed, it's detrimental to performance.
+            I'll keep this type of solution in mind for future problems, however. 
+        </p>
 
         <hr>
         <pre><code>pub fn euler_1_loop(limit: u32) -> u32 {
