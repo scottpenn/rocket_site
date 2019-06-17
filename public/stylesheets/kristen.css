@@ -75,6 +75,10 @@ body {
     position: absolute;
 }
 
+h1 a:hover {
+    text-decoration: none;
+}
+
 a:hover {
     text-decoration: underline;
 }
@@ -299,6 +303,7 @@ a:hover {
 
 .content a {
     color: var(--black);
+    text-decoration: none
 }
 
 blockquote {

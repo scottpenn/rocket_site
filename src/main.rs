@@ -15,14 +15,31 @@ use rocket::response::status::NotFound;
 use rocket::response::content::Html;
 use rocket_contrib::serve::StaticFiles;
 
+//common elements
 lazy_static! {
     static ref HEAD: String = {
-        read_to_string("public/pages/head.html").expect("No file named head.html")
+        read_to_string("public/pages/partials/head.html").expect("No file named head.html")
     };
     static ref NAV: String = {
-        read_to_string("public/pages/nav.html").expect("No file named nav.html")
+        read_to_string("public/pages/partials/nav.html").expect("No file named nav.html")
     };
 
+}
+
+//page content
+lazy_static! {
+    static ref INDEX: String = {
+        construct_page("public/pages/index.html")
+    };
+    static ref ABOUT: String = {
+        construct_page("public/pages/about.html")
+    };
+    static ref EULER: String = {
+        construct_page("public/pages/euler.html")
+    };
+    static ref TWITTER: String = {
+        construct_page("public/pages/twitter.html")
+    };
 }
 
 fn construct_page(filename: &str) -> String {
@@ -34,29 +51,22 @@ fn construct_page(filename: &str) -> String {
 
 #[get("/")]
 fn index() -> Html<&'static str> {
-
-    lazy_static! {
-        static ref INDEX: String = {
-            construct_page("public/pages/index.html")
-        };
-    }
-
     Html(&*INDEX)
 }
 
 #[get("/euler")]
-fn euler() -> Result<NamedFile, NotFound<String>> {
-    NamedFile::open("public/pages/euler.html").map_err(|n| NotFound(format!("Bad path: {:?}", n)))
+fn euler() -> Html<&'static str> {
+    Html(&*EULER)
 }
 
 #[get("/about")]
-fn about() -> Result<NamedFile, NotFound<String>> {
-    NamedFile::open("public/pages/about.html").map_err(|n| NotFound(format!("Bad path: {:?}", n)))
+fn about() -> Html<&'static str> {
+    Html(&*ABOUT)
 }
 
 #[get("/twitter")]
-fn twitter() -> Result<NamedFile, NotFound<String>> {
-    NamedFile::open("public/pages/twitter.html").map_err(|n| NotFound(format!("Bad path: {:?}", n)))
+fn twitter() -> Html<&'static str> {
+    Html(&*TWITTER)
 }
 
 //Static file server
