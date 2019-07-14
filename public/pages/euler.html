@@ -48,17 +48,7 @@
             The first solution is a simple for loop, testing each number for the conditions.
         </p>
 
-        <hr>
-        <pre><code>pub fn euler_1(limit: u32) -> u32 {
-    let mut sum = 0;
-    for i in 1..limit {
-        if i % 5 == 0 || i % 3 == 0 {
-            sum += i;
-        }
-    }
-    sum
-}</code></pre>
-        <hr>
+        <img src="/code/euler_1.png" alt="euler 1 initial" width="100%">
 
         <p>
             Using cargo bench and Criterion, the benchmark output: <br><br>
@@ -67,11 +57,7 @@
             so I predict that the iterator approach should provide the same performance.
         </p>
 
-        <hr>
-        <pre><code>pub fn euler_1_iter(limit: u32) -> u32 {
-    (1..limit).filter(|i| i % 5 == 0 || i % 3 == 0).sum()
-}</code></pre>
-        <hr>
+        <img src="/code/euler_1_iter.png" alt="euler 1 iterator" width="100%">
 
         <p>
             As expected, the benchmark output agrees, showing virtually no change in performance: <br><br>
@@ -80,41 +66,16 @@
             Rayon provides easy to use methods for parallel computation. With one insertion of the into_par_iter method, this function is now parallel.
         </p>
 
-        <hr>
-        <pre><code>pub fn euler_1_par_iter(limit: u32) -> u32 {
-    (1..limit).into_par_iter().filter(|i| i % 5 == 0 || i % 3 == 0).sum()
-}</code></pre>
-        <hr>
+        <img src="/code/euler_1_par_iter.png" alt="euler 1 paralell iterator" width="100%">
 
         <p>
             Euler 1/Parallel Iterator time: [39.087 us 44.793 us 52.946 us] <br><br>
 
-            What happened? Well, given the limit of only 1000, the jump to parallel processing is not only not needed, it's detrimental to performance.
+            What happened? Well, given the limit of only 1000, the jump to parallel processing is not only not needed, the added overhead is detrimental to performance.
             I'll keep this type of solution in mind for future problems, however. 
         </p>
 
-        <hr>
-        <pre><code>pub fn euler_1_loop(limit: u32) -> u32 {
-    let mut sum = 0;
-    let mut threes = 3;
-    let mut fives = 5;
-
-    while threes < limit {
-        sum += threes;
-        threes += 3;
-    }
-
-    while fives < limit {
-        sum += fives;
-        fives += 5;
-        if fives >= limit { break }
-        sum += fives;
-        fives += 10;
-    }
-
-    sum
-}</code></pre>
-        <hr>
+        <img src="/code/euler_1_loop_unrolled.png" alt="euler 1 loop unrolled" width="100%">
 
     </section>
 
