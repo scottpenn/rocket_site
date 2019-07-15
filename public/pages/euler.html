@@ -75,7 +75,33 @@
             I'll keep this type of solution in mind for future problems, however. 
         </p>
 
+        <p>
+            To produce a better solution, I took a look at the inital for loop once more. It checks for divisors of both 3 and 5 on every iteration.
+            This is unnecessary, as we know that the condition will be satisfied every 3 and 5 iterations, respectively. To apply this in code,
+            I create two variables, threes and fives, and set their initial values to 3 and 5. Starting with threes, I add it to the sum and then increment by 3.
+            Once the limit has been reached, the fives are then incremented by five. However, to avoid numbers like 15 which are multiples of both 3 and 5,
+            I skip every third increment of the fives variable. 
+        </p>
+
+        <p>
+            To produce a better solution, I took a look at the inital for loop once more. It checks for divisors of both 3 and 5 on every iteration.
+            This is unnecessary, as we know that the condition will be satisfied every 3 and 5 iterations, respectively. To apply this in code,
+            I create two variables, threes and fives, and set their initial values to 3 and 5. Starting with threes, I add it to the sum and then increment by 3.
+            Once the limit has been reached, the fives are then incremented by five. However, to avoid numbers like 15 which are multiples of both 3 and 5,
+            I skip every third increment of the fives variable. 
+        </p>
+
         <img src="/code/euler_1_loop_unrolled.png" alt="euler 1 loop unrolled" width="100%">
+
+        <p>
+           Euler 1/For Loop Unrolled    time: [161.01 ns 161.28 ns 161.63 ns]<br><br>
+           This specialized solution results in a significant speed up, even with a limit of only 1000. 
+           Perhaps too much effort for a problem that can be solved efficiently with one line of code, but it was a good exercise nonetheless.
+        </p>
+
+        <p>
+
+        </p>
 
     </section>
 

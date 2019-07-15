@@ -5,10 +5,7 @@ extern crate rocket_contrib;
 #[macro_use]
 extern crate lazy_static;
 
-use std::fs::File;
 use std::fs::read_to_string;
-use std::io;
-use std::io::Error;
 use std::path::{PathBuf, Path};
 use rocket::response::NamedFile;
 use rocket::response::status::NotFound;
@@ -40,10 +37,10 @@ lazy_static! {
 }
 
 fn construct_page(filename: &str) -> String {
-    let mut index = read_to_string(filename).expect(&format!("No file named {}.", filename));
-    index = index.replace("!head!", &*HEAD);
-    index = index.replace("!nav!", &*NAV);
-    index
+    let mut page = read_to_string(filename).expect(&format!("No file named {}.", filename));
+    page = page.replace("!head!", &*HEAD);
+    page = page.replace("!nav!", &*NAV);
+    page
 }
 
 #[get("/")]
