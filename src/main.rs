@@ -34,6 +34,9 @@ lazy_static! {
     static ref EULER: String = {
         construct_page("public/pages/euler.html")
     };
+    static ref TENNIS: String = {
+        construct_page("public/pages/tennis.html")
+    };
 }
 
 fn construct_page(filename: &str) -> String {
@@ -58,6 +61,11 @@ fn about() -> Html<&'static str> {
     Html(&*ABOUT)
 }
 
+#[get("/tennis")]
+fn tennis() -> Html<&'static str> {
+    Html(&*TENNIS)
+}
+
 //Static file server
 #[get("/<file..>", rank = 2)]
 fn files(file: PathBuf) -> Result<NamedFile, NotFound<String>> {
@@ -66,5 +74,5 @@ fn files(file: PathBuf) -> Result<NamedFile, NotFound<String>> {
 }
 
 fn main() {
-    rocket::ignite().mount("/", routes![index, euler, about, files]).mount("/", StaticFiles::from("public")).launch();
+    rocket::ignite().mount("/", routes![index, euler, about, tennis, files]).mount("/", StaticFiles::from("public")).launch();
 }
